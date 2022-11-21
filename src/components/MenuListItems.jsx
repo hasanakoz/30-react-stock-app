@@ -51,6 +51,13 @@ const icons = [
   },
 ];
 
+const iconStyle = {
+  color: "#a93d3d",
+  "& .MuiSvgIcon-root": { color: "#a93d3d" },
+  "&:hover": { color: "green" },
+  "&:hover .MuiSvgIcon-root": { color: "green" },
+};
+
 const MenuListItems = () => {
   const navigate = useNavigate();
   return (
@@ -58,10 +65,18 @@ const MenuListItems = () => {
       <List>
         {icons?.map((item, index) => (
           <ListItem key={index} disablePadding>
-            <ListItemButton onClick={() => navigate(item.url)}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.title} />
-            </ListItemButton>
+            {item.url.includes("http") && (
+              <ListItemButton to={item.url} sx={iconStyle}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.title} />
+              </ListItemButton>
+            )}
+            {!item.url.includes("http") && (
+              <ListItemButton onClick={() => navigate(item.url)} sx={iconStyle}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.title} />
+              </ListItemButton>
+            )}
           </ListItem>
         ))}
       </List>
