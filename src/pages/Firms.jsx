@@ -1,15 +1,18 @@
 import useStockCalls from "../hooks/useStockCalls";
 // import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import FirmCard from "../components/FirmCard";
+import FirmModal from "../components/modals/FirmModal";
 // import { useDispatch, useSelector } from "react-redux";
 // import { fetchFail, fetchStart, getSuccess } from "../features/stockSlice";
 
 const Firms = () => {
   const { getFirms } = useStockCalls();
   const { firms } = useSelector((state) => state.stock);
+  const [open, setOpen] = useState(false);
+  const [info, setInfo] = useState({});
 
   // const dispatch = useDispatch();
   // const { token } = useSelector((state) => state.auth);
@@ -38,13 +41,17 @@ const Firms = () => {
       <Typography variant="h4" color="error" mb={4}>
         Firms
       </Typography>
-      <Button variant="contained">New Firm</Button>
+      <Button variant="contained" onClick={() => setOpen(true)}>
+        Add New Firm
+      </Button>
+
+      <FirmModal open={open} setOpen={setOpen} info={info} setInfo={setInfo} />
 
       {firms?.length > 0 && (
         <Grid container justifyContent="center" gap={3}>
           {firms?.map((firm) => (
-            <Grid item>
-              <FirmCard key={firm.id} firm={firm} />
+            <Grid key={firm.id} item>
+              <FirmCard firm={firm} />
             </Grid>
           ))}
         </Grid>
