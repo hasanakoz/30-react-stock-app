@@ -7,7 +7,8 @@ import { Button, TextField } from "@mui/material";
 import useStockCalls from "../../hooks/useStockCalls";
 
 export default function FirmModal({ open, setOpen, info, setInfo }) {
-  const { postFirm } = useStockCalls();
+  const { postFirm, putFirm } = useStockCalls();
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
