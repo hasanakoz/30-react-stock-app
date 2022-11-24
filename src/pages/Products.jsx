@@ -21,8 +21,9 @@ import { MultiSelectBox, MultiSelectBoxItem } from "@tremor/react";
 // import { fetchFail, fetchStart, getSuccess } from "../features/stockSlice";
 
 const Products = () => {
-  const { getBrands, getCategories, getProducts, brands } = useStockCalls();
-  const { products } = useSelector((state) => state.stock);
+  const { getBrands, getCategories, getProducts, deleteProduct } =
+    useStockCalls();
+  const { products, brands } = useSelector((state) => state.stock);
   const [open, setOpen] = useState(false);
   const [info, setInfo] = useState({});
   const [selectedBrands, setSelectedBrands] = useState([]);
@@ -64,7 +65,7 @@ const Products = () => {
         Add New Product
       </Button>
 
-      <Box>
+      <Box sx={flexCenter} mt={3}>
         <MultiSelectBox
           handleSelect={(item) => setSelectedBrands(item)}
           placeholder="Select Brand"
@@ -80,7 +81,7 @@ const Products = () => {
 
         <MultiSelectBox
           handleSelect={(item) => setSelectedProducts(item)}
-          placeholder="Select Brand"
+          placeholder="Select Product"
         >
           {filteredProducts?.map((item) => (
             <MultiSelectBoxItem key={item} value={item} text={item} />
@@ -130,7 +131,8 @@ const Products = () => {
             </TableHead>
             <TableBody>
               {sortedData
-                .filter((item) => isBrandSelected(item))
+                ?.filter((item) => isBrandSelected(item))
+                .filter((item) => isProductSelected(item))
                 .map((product, index) => (
                   <TableRow
                     key={product.name}
@@ -143,7 +145,10 @@ const Products = () => {
                     <TableCell align="center">{product.brand}</TableCell>
                     <TableCell align="center">{product.name}</TableCell>
                     <TableCell align="center">{product.stock}</TableCell>
-                    <TableCell align="center">
+                    <TableCell
+                      align="center"
+                      onClick={() => deleteProduct(product.id)}
+                    >
                       <DeleteIcon sx={btnHoverStyle} />
                     </TableCell>
                   </TableRow>
