@@ -5,10 +5,10 @@ import KpiCards from "../components/KpiCards";
 import useStockCalls from "../hooks/useStockCalls";
 
 const Home = () => {
-  const { getFirms, getSales } = useStockCalls();
+  const { getPurchases, getSales } = useStockCalls();
 
   useEffect(() => {
-    getFirms();
+    getPurchases();
     getSales();
   }, []);
 
