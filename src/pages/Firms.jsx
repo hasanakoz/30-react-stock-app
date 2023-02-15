@@ -16,7 +16,7 @@ const Firms = () => {
 
   // const dispatch = useDispatch();
   // const { token } = useSelector((state) => state.auth);
-  // const BASE_URL = "https://10001.fullstack.clarusway.com/";
+  // const BASE_URL = "https://13511.fullstack.clarusway.com/";
   // const getFirms = async () => {
   //   const url = "firms";
   //   dispatch(fetchStart());
@@ -50,7 +50,7 @@ const Firms = () => {
       {firms?.length > 0 && (
         <Grid container justifyContent="center" gap={3}>
           {firms?.map((firm) => (
-            <Grid key={firm.id} item>
+            <Grid item key={firm.id}>
               <FirmCard firm={firm} setOpen={setOpen} setInfo={setInfo} />
             </Grid>
           ))}

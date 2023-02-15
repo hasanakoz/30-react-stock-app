@@ -9,7 +9,7 @@ import * as Yup from "yup";
 export const loginSchema = Yup.object().shape({
   email: Yup.string()
     .email("Please enter valid email")
-    .required("Email is mandatory"),
+    .required("Email is required"),
   password: Yup.string()
     .min(8, "Password must have min 8 chars")
     .max(16, "Password must have max 16 chars")
