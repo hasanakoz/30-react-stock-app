@@ -1,7 +1,7 @@
 import useStockCalls from "../hooks/useStockCalls";
 // import axios from "axios";
 import { useEffect, useState } from "react";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import * as React from "react";
 import Table from "@mui/material/Table";
@@ -21,11 +21,15 @@ import { MultiSelectBox, MultiSelectBoxItem } from "@tremor/react";
 // import { fetchFail, fetchStart, getSuccess } from "../features/stockSlice";
 
 const Products = () => {
-  const { getBrands, getCategories, getProducts, deleteProduct } =
-    useStockCalls();
+  const {
+    getBrands,
+    getCategories,
+    getProducts,
+    deleteProduct,
+    getProCatBrnd,
+  } = useStockCalls();
   const { products, brands } = useSelector((state) => state.stock);
   const [open, setOpen] = useState(false);
-  const [info, setInfo] = useState({});
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
 
@@ -41,9 +45,10 @@ const Products = () => {
   );
 
   useEffect(() => {
-    getBrands();
-    getCategories();
-    getProducts();
+    // getBrands();
+    // getCategories();
+    // getProducts();
+    getProCatBrnd();
   }, []);
 
   const isBrandSelected = (item) =>
@@ -55,6 +60,8 @@ const Products = () => {
   const filteredProducts = products
     ?.filter((item) => selectedBrands.includes(item.brand))
     .map((item) => item.name);
+
+  console.log(selectedBrands);
 
   return (
     <Box>

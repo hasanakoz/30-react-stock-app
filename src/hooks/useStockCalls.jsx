@@ -1,6 +1,11 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { fetchFail, fetchStart, getSuccess } from "../features/stockSlice";
+import {
+  fetchFail,
+  fetchStart,
+  getSuccess,
+  getProCatBrndSuccess,
+} from "../features/stockSlice";
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 // import { axiosWithToken } from "../service/axiosInstance";
 import useAxios from "./useAxios";
@@ -26,6 +31,22 @@ const useStockCalls = () => {
   const getBrands = () => getStockData("brands");
   const getProducts = () => getStockData("products");
   const getPurchases = () => getStockData("purchases");
+
+  const getProCatBrnd = async () => {
+    dispatch(fetchStart);
+    try {
+      const [products, categories, brands] = await Promise.all([
+        axiosWithToken.get("stock/products/"),
+        axiosWithToken.get("stock/categories/"),
+        axiosWithToken.get("stock/brands/"),
+      ]);
+      dispatch(
+        getProCatBrndSuccess([products.data, categories.data, brands.data])
+      );
+    } catch (error) {
+      dispatch(fetchFail);
+    }
+  };
 
   //   const getFirms = async () => {
   //     const url = "firms";
@@ -96,6 +117,7 @@ const useStockCalls = () => {
     getProducts,
     deleteProduct,
     getPurchases,
+    getProCatBrnd,
   };
 };
 
