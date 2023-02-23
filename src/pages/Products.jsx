@@ -17,21 +17,17 @@ import UpgradeIcon from "@mui/icons-material/Upgrade";
 import VerticalAlignBottomIcon from "@mui/icons-material/VerticalAlignBottom";
 import useSortColumn from "../hooks/useSortColumn";
 import { MultiSelectBox, MultiSelectBoxItem } from "@tremor/react";
+import ProductModal from "../components/modals/ProductModal";
 // import { useDispatch, useSelector } from "react-redux";
 // import { fetchFail, fetchStart, getSuccess } from "../features/stockSlice";
 
 const Products = () => {
-  const {
-    getBrands,
-    getCategories,
-    getProducts,
-    deleteProduct,
-    getProCatBrnd,
-  } = useStockCalls();
+  const { deleteProduct, getProCatBrnd } = useStockCalls();
   const { products, brands } = useSelector((state) => state.stock);
   const [open, setOpen] = useState(false);
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
+  const [info, setInfo] = useState({});
 
   const columnObj = {
     brand: 1,
@@ -71,6 +67,12 @@ const Products = () => {
       <Button variant="contained" onClick={() => setOpen(true)} color="success">
         Add New Product
       </Button>
+      <ProductModal
+        open={open}
+        setOpen={setOpen}
+        info={info}
+        setInfo={setInfo}
+      />
 
       <Box sx={flexCenter} mt={3}>
         <MultiSelectBox

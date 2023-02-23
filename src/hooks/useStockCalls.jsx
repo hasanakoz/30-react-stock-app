@@ -75,6 +75,7 @@ const useStockCalls = () => {
   const deleteFirm = (id) => deleteStockData("firms", id);
   const deleteBrand = (id) => deleteStockData("brands", id);
   const deleteProduct = (id) => deleteStockData("products", id);
+  const deletePurchase = (id) => deleteStockData("purchases", id);
 
   const postStockData = async (info, url) => {
     try {
@@ -89,6 +90,8 @@ const useStockCalls = () => {
 
   const postFirm = (info) => postStockData(info, "firms");
   const postBrand = (info) => postStockData(info, "brands");
+  const postProduct = (info) => postStockData(info, "products");
+  const postPurchase = (info) => postStockData(info, "purchases");
 
   const putStockData = async (info, url) => {
     try {
@@ -103,6 +106,7 @@ const useStockCalls = () => {
 
   const putFirm = (info) => putStockData(info, "firms");
   const putBrand = (info) => putStockData(info, "brands");
+  const putPurchase = (info) => putStockData(info, "purchases");
 
   return {
     putBrand,
@@ -118,6 +122,10 @@ const useStockCalls = () => {
     deleteProduct,
     getPurchases,
     getProCatBrnd,
+    postProduct,
+    putPurchase,
+    deletePurchase,
+    postPurchase,
   };
 };
 

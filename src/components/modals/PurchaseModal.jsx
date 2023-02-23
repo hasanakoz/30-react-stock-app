@@ -14,13 +14,13 @@ import {
 import useStockCalls from "../../hooks/useStockCalls";
 import { useSelector } from "react-redux";
 
-export default function ProductModal({ open, setOpen, info, setInfo }) {
-  const { postProduct, getBrands, getCategories } = useStockCalls();
-  const { categories, brands } = useSelector((state) => state.stock);
+export default function PurchaseModal({ open, setOpen, info, setInfo }) {
+  const { postPurchase } = useStockCalls();
+  const { products, brands, firms } = useSelector((state) => state.stock);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    postProduct(info);
+    postPurchase(info);
     setOpen(false);
     setInfo({});
   };
@@ -34,7 +34,7 @@ export default function ProductModal({ open, setOpen, info, setInfo }) {
   //   getCategories();
   // }, []);
 
-  // console.log(brands, categories);
+  console.log(firms);
 
   return (
     <div>
@@ -50,18 +50,18 @@ export default function ProductModal({ open, setOpen, info, setInfo }) {
         <Box sx={modalStyle}>
           <Box component="form" onSubmit={handleSubmit} sx={flexColumn}>
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Category</InputLabel>
+              <InputLabel id="demo-simple-select-label">Firm</InputLabel>
 
               <Select
-                label="Category"
+                label="Firm"
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                // value={info?.category || ""}
+                value={info?.firm}
                 onChange={handleChange}
               >
-                {categories?.map((category) => (
-                  <MenuItem value={category.name || ""}>
-                    {category.name || ""}
+                {firms?.map((firm, key) => (
+                  <MenuItem key={firm.id} value={firm?.name || ""}>
+                    {firm?.name || ""}
                   </MenuItem>
                 ))}
               </Select>
@@ -85,19 +85,46 @@ export default function ProductModal({ open, setOpen, info, setInfo }) {
               </Select>
             </FormControl>
 
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Product</InputLabel>
+
+              <Select
+                label="Brand"
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={info?.product || ""}
+                onChange={handleChange}
+              >
+                {products?.map((product) => (
+                  <MenuItem value={product.name || ""}>
+                    {product.name || ""}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             <TextField
-              label="Product Name"
-              name="name"
-              id="name"
+              label="Quantity"
+              name="quantity"
+              id="quantity"
               type="text"
               variant="outlined"
               required
-              value={info?.name || ""}
+              value={info?.quantity || ""}
+              onChange={handleChange}
+            ></TextField>
+            <TextField
+              label="Price"
+              name="price"
+              id="prcie"
+              type="text"
+              variant="outlined"
+              required
+              value={info?.price || ""}
               onChange={handleChange}
             ></TextField>
 
             <Button type="submit" variant="contained">
-              Add New Product
+              Add New Purchase
             </Button>
           </Box>
         </Box>

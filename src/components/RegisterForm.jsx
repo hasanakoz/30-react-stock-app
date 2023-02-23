@@ -21,8 +21,7 @@ export const registerSchema = Yup.object().shape({
     .max(16, "Password must have max 16 chars")
     .matches(/\d+/, "Password must have a number")
     .matches(/[a-z]+/, "Password must have a lowercase")
-    .matches(/[A-Z]+/, "Password must have an uppercase")
-    .matches(/[!,?{}><%&$#£+-.]+/, " Password must have a special char"),
+    .matches(/[A-Z]+/, "Password must have an uppercase"),
 });
 
 const SignUpForm = ({ values, handleChange, errors, touched, handleBlur }) => {
